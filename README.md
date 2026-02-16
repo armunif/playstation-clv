@@ -64,4 +64,4 @@ Key design choices and their rationale are documented throughout the notebooks a
 
 ---
 
-Built as a portfolio project for the Data Scientist — CLV & Next Best Action role at PlayStation.
+
