@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlayStation CLV & Next Best Action — Project Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@300;400;600;700&family=Source+Code+Pro:wght@400;500&display=swap');
+
+  :root {
+    --ps-blue: #003087;
+    --ps-blue-light: #0070D1;
+    --ps-dark: #1a1a2e;
+    --ps-accent: #00C3E3;
+    --text-primary: #2c2c2c;
+    --text-secondary: #5a5a5a;
+    --text-light: #888;
+    --bg-white: #ffffff;
+    --bg-light: #f8f9fa;
+    --bg-warm: #fafaf7;
+    --border: #e0e0e0;
+    --red: #d63031;
+    --orange: #e67e22;
+    --green: #27ae60;
+    --blue: #2980b9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    color: var(--text-primary);
+    line-height: 1.75;
+    font-size: 17px;
+    background: var(--bg-warm);
+  }
+
+  /* ── HEADER ── */
+  .report-header {
+    background: linear-gradient(135deg, var(--ps-dark) 0%, var(--ps-blue) 100%);
+    color: white;
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+  .report-header h1 {
+    font-size: 2.6em;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .report-header .subtitle {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.15em;
+    font-weight: 300;
+    opacity: 0.85;
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+  .report-header .meta {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.85em;
+    opacity: 0.6;
+  }
+.report-header .meta a {
+    color: white;
+    text-decoration: none;
+}
+.report-header .meta a:visited {
+    color: white;
+}
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 30px;
+  }
+
+  section {
+    padding: 50px 0 30px;
+    border-bottom: 1px solid var(--border);
+  }
+  section:last-child { border-bottom: none; }
+
+  /* ── TYPOGRAPHY ── */
+  h2 {
+    font-size: 1.85em;
+    font-weight: 700;
+    color: var(--ps-blue);
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+  h2 .section-num {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 0.6em;
+    color: var(--text-light);
+    display: block;
+    margin-bottom: 4px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  h3 {
+    font-size: 1.25em;
+    font-weight: 600;
+    margin: 35px 0 12px;
+    color: var(--text-primary);
+  }
+  p { margin-bottom: 18px; }
+  strong { font-weight: 600; }
+
+  /* ── CALLOUT BOX ── */
+  .callout {
+    background: var(--bg-light);
+    border-left: 4px solid var(--ps-blue-light);
+    padding: 20px 24px;
+    margin: 25px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.95em;
+  }
+  .callout.warning {
+    border-left-color: var(--orange);
+    background: #fef9f3;
+  }
+  .callout.insight {
+    border-left-color: var(--green);
+    background: #f4faf6;
+  }
+  .callout-title {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    color: var(--text-secondary);
+  }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 28px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.92em;
+  }
+  th {
+    background: var(--ps-dark);
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:nth-child(even) { background: var(--bg-light); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* ── METRIC CARDS ── */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 25px 0;
+  }
+  .metric-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+  .metric-card .value {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--ps-blue);
+    line-height: 1.1;
+  }
+  .metric-card .label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.8em;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+
+  /* ── PIPELINE DIAGRAM ── */
+  .pipeline {
+    background: var(--ps-dark);
+    color: white;
+    border-radius: 10px;
+    padding: 30px 35px;
+    margin: 25px 0;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.85em;
+    line-height: 1.8;
+    overflow-x: auto;
+  }
+  .pipeline .step { color: var(--ps-accent); font-weight: 500; }
+  .pipeline .arrow { color: #666; }
+
+  /* ── NBA GRID ── */
+  .nba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .nba-card {
+    border-radius: 8px;
+    padding: 18px 20px;
+    border: 1px solid var(--border);
+  }
+  .nba-card h4 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.95em;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .nba-card p {
+    font-size: 0.88em;
+    margin-bottom: 0;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .nba-card.retain-critical { background: #fef2f2; border-color: #f8c4c4; }
+  .nba-card.retain-critical h4 { color: var(--red); }
+  .nba-card.retain-standard { background: #fef9f3; border-color: #f5d9b0; }
+  .nba-card.retain-standard h4 { color: var(--orange); }
+  .nba-card.upsell { background: #eff8ff; border-color: #b3d9f7; }
+  .nba-card.upsell h4 { color: var(--blue); }
+  .nba-card.nurture { background: #f0faf4; border-color: #b3e6c8; }
+  .nba-card.nurture h4 { color: var(--green); }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    background: var(--ps-dark);
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .report-footer a { color: var(--ps-accent); text-decoration: none; }
+  .report-footer .small { font-size: 0.85em; opacity: 0.6; margin-top: 10px; }
+
+  /* ── PRINT ── */
+  @media print {
+    body { font-size: 11pt; background: white; }
+    .report-header { padding: 40px 0 30px; }
+    section { padding: 30px 0 20px; }
+    .callout, .metric-card { break-inside: avoid; }
+    .report-footer { padding: 20px 0; }
+  }
+
+  @media (max-width: 600px) {
+    .metrics-row { grid-template-columns: 1fr; }
+    .nba-grid { grid-template-columns: 1fr; }
+    .report-header h1 { font-size: 1.8em; }
+    .container { padding: 0 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
+<header class="report-header">
+  <div class="container">
+    <h1>Customer Lifetime Value &<br>Next Best Action Framework for PlayStation</h1>
+    <p class="subtitle">
+      An end-to-end data science project for PlayStation's player lifecycle —
+      from behavioural signals to personalised marketing decisions.
+    </p>
+    <p class="subtitle">
+      By Arshan Munif &middot; Data Scientist <br> 
+      <a href="https://github.com/armunif/playstation-clv" style="color: white !important;">View full code and notebooks on GitHub &rarr;</a> <br>
+ 
+    </p>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ═══════════════════════════════ EXECUTIVE SUMMARY ═══════════════════ -->
+<section>
+  <h2><span class="section-num">Executive Summary</span>How Should PlayStation Decide Which Players to Invest In?</h2>
+
+  <p>PlayStation's player base spans millions of subscribers across multiple engagement levels and subscription tiers. Some players are deeply invested, spending hundreds of dollars a year on games, DLC, and PS Plus Premium. Others are drifting away, one missed session at a time. And a few are on the verge of cancelling altogether.</p>
+
+  <p>The question isn't whether these differences exist — it's whether PlayStation can <strong>detect them early enough to act</strong>, and whether the actions taken are <strong>personalised enough to be effective</strong>.</p>
+
+  <p>This project builds the analytical infrastructure to answer that question. Using simulated PlayStation data designed to mirror real-world player behaviour, we construct a complete pipeline: from raw session, purchase, and trophy data, through churn prediction and purchase propensity modelling, to a <strong>Next Best Action framework</strong> that assigns a specific, budget-constrained marketing recommendation to each player.</p>
+
+  <div class="metrics-row">
+    <div class="metric-card">
+      <div class="value">5,000</div>
+      <div class="label">Players Scored</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">47</div>
+      <div class="label">Behavioural Features</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">5</div>
+      <div class="label">Action Categories</div>
+    </div>
+  </div>
+
+  <div class="pipeline">
+    <span class="step">Raw Events</span> <span class="arrow">(sessions, purchases, trophies)</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow">&darr;</span><br>
+    <span class="step">Player 360 Feature Table</span> <span class="arrow">(47 features per player)</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow">├──&rarr;</span> <span class="step">Churn Model</span> <span class="arrow">&mdash; who's leaving?</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow">├──&rarr;</span> <span class="step">Propensity Model</span> <span class="arrow">&mdash; who's buying?</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow">└──&rarr;</span> <span class="step">CLV Estimation</span> <span class="arrow">&mdash; what are they worth?</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow">&darr;</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="step">Next Best Action Framework</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="arrow">(player-level recommendations + budget ceilings)</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ ASSUMPTIONS ═══════════════════════════ -->
+<section>
+  <h2><span class="section-num">Section 1</span>Assumptions & Approach</h2>
+
+  <p>No public PlayStation dataset exists that captures PS Plus subscription tiers, session-level engagement, DLC behaviour, and trophy data in a single source. Rather than forcing a generic public dataset into a PlayStation-shaped hole, we designed a <strong>synthetic dataset</strong> that mirrors the data structures and behavioural patterns PlayStation's DSAE team would work with in production.</p>
+
+  <p>This is a deliberate methodological choice. The simulation embeds realistic behavioural signals — declining engagement before churn, free DLC engagement predicting paid DLC conversion, trophy depth as a retention signal — so that models trained on this data face the same analytical challenges as models trained on real production data. <strong>The methodology is fully transferable; only the data source would change.</strong></p>
+
+  <h3>What We Don't Know</h3>
+  <p>We are not PlayStation employees and do not have access to internal data or systems. We don't know PlayStation's actual data schema, real churn rates, internal definitions of player activity, how their personalisation engine works, or the details of their A/B testing infrastructure. We also don't know whether PlayStation models CLV at the individual player level or at a cohort level, or how they define churn (subscription cancellation vs. engagement churn vs. platform abandonment).</p>
+
+  <h3>What We Assumed</h3>
+
+  <table>
+    <tr><th>Assumption</th><th>Rationale</th></tr>
+    <tr><td>6 latent player archetypes (whale, core, casual, lapsed, dormant, new)</td>
+        <td>Common pattern in subscription/gaming businesses. Real segmentation would be data-driven.</td></tr>
+    <tr><td>Churn = paid PS Plus subscription cancellation</td>
+        <td>Most directly measurable and actionable definition. Real-world would include engagement churn.</td></tr>
+    <tr><td>24-month observation window (Jan 2024 — Dec 2025)</td>
+        <td>Sufficient history for behavioural trend features. Predictions target Q1 2026.</td></tr>
+    <tr><td>PS Plus tiers: Free / Essential / Extra / Premium</td>
+        <td>Matches publicly known tier structure. Pricing approximated from public sources.</td></tr>
+    <tr><td>Free DLC engagement predicts paid DLC purchases (Valhalla hypothesis)</td>
+        <td>Plausible personalisation signal. Would require A/B test validation in production.</td></tr>
+  </table>
+
+  <h3>What Would Change With Real Data</h3>
+  <p>With access to PlayStation's actual data infrastructure, the project would gain substantially richer features: social graph data (friends list activity, party play), marketing response history (past campaign engagement, email opens), payment failure data (involuntary churn), customer service interactions, device-level signals (PS5 vs PS4, peripherals, PS VR usage), and content browsing behaviour beyond gameplay. The modelling approach and decision framework would remain the same — the feature engineering layer is what adapts.</p>
+</section>
+
+<!-- ═══════════════════════════════ DATA ═══════════════════════════════ -->
+<section>
+  <h2><span class="section-num">Section 2</span>Data & Feature Engineering</h2>
+
+  <p>The simulated dataset comprises 5,000 players across 7 interconnected tables that mirror a typical gaming data warehouse: player profiles, PS Plus subscription history, game session logs, store transactions (full games, DLC, and microtransactions), trophy unlocks, a 30-title game catalog, and a 13-item DLC catalog.</p>
+
+  <p>From these raw events, we engineered a <strong>Player 360 feature table</strong> — one row per player, 47 features — spanning six categories designed to capture different dimensions of player value and risk.</p>
+
+  <table>
+    <tr><th>Category</th><th>Example Features</th><th>Why It Matters</th></tr>
+    <tr><td><strong>Engagement</strong></td>
+        <td>Session frequency, recency, duration, game diversity, 30/90/180-day windows</td>
+        <td>Declining engagement is the earliest churn signal</td></tr>
+    <tr><td><strong>Engagement Trends</strong></td>
+        <td>Session slope (6-month linear regression), engagement recency ratio</td>
+        <td>Direction matters more than level — a declining player at 10 sessions/month is higher risk than a stable player at 5</td></tr>
+    <tr><td><strong>Monetary</strong></td>
+        <td>Total spend, spend by type (games/DLC/MTX), recent spend velocity</td>
+        <td>Revenue history is the foundation of CLV</td></tr>
+    <tr><td><strong>Subscription</strong></td>
+        <td>Tier, billing cycle, auto-renew status, tenure</td>
+        <td>Structural commitment indicators</td></tr>
+    <tr><td><strong>Trophy</strong></td>
+        <td>Total trophies, platinum count, trophies per session, recency</td>
+        <td>Engagement depth beyond time spent — completionists are stickier</td></tr>
+    <tr><td><strong>DLC & Content</strong></td>
+        <td>Free DLC claims, paid DLC purchases, Valhalla claim flag</td>
+        <td>Content engagement predicts future purchases</td></tr>
+  </table>
+
+  <h3>Key Analytical Findings from Exploratory Analysis</h3>
+
+  <p><strong>Churn is gradual, not sudden.</strong> Players who eventually cancel show a measurable decline in session frequency over the 1–6 months preceding cancellation. This decay pattern is the modelling opportunity: if we can detect the decline early, we can intervene while there's still a relationship to save.</p>
+
+  <p><strong>Revenue concentration is extreme.</strong> The top 10% of spenders generate the majority of total revenue. This justifies the entire CLV modelling exercise — identifying and retaining high-value players is disproportionately important compared to treating all players equally.</p>
+
+  <p><strong>Auto-renew is the single strongest churn indicator.</strong> Among churned subscribers, 85% had auto-renew turned off before cancelling, compared to only 20% of retained subscribers. But combining this structural signal with behavioural trend features yields a substantially better model than either alone.</p>
+
+  <p><strong>Free DLC engagement predicts paid DLC purchases.</strong> Players who claimed the free God of War: Ragnarok Valhalla DLC purchased paid DLC at a rate 149% higher than non-claimers. This validates a specific personalisation hypothesis that we explore further in the propensity model.</p>
+</section>
+
+<!-- ═══════════════════════════════ CHURN MODEL ═══════════════════════════ -->
+<section>
+  <h2><span class="section-num">Section 3</span>Churn Prediction</h2>
+
+  <p>The churn model predicts which paid PS Plus subscribers will cancel, enabling the lifecycle marketing team to intervene before the relationship ends. We compared a Logistic Regression baseline against a Gradient Boosting classifier, the latter being the workhorse of production tabular ML (and explicitly mentioned in PlayStation's job description).</p>
+
+  <div class="callout warning">
+    <div class="callout-title">A Note on Model Performance</div>
+    <p>Our churn model achieves an AUC of 0.998 — essentially perfect discrimination. This is <strong>unrealistically high</strong> and reflects the clean, intentionally embedded signals in our simulated data, not what you'd see with production data. With real PlayStation telemetry — which includes noise, missing data, confounding variables, and ambiguous player behaviour — we'd expect AUC in the <strong>0.78–0.85 range</strong>, which is still highly actionable. The value of this project is the methodology (evaluation framework, threshold tuning, risk segmentation, business framing), not the specific metric values.</p>
+  </div>
+
+  <h3>Evaluation Beyond Accuracy</h3>
+  <p>With a 17% churn rate, a model that predicts "no one churns" achieves 83% accuracy — and is completely useless. We evaluate using metrics that matter for business deployment: <strong>precision</strong> (of the players we flag, how many actually churn?), <strong>recall</strong> (of all churners, how many do we catch?), and the <strong>precision-recall trade-off</strong> at different operating thresholds.</p>
+
+  <h3>Threshold Tuning: Matching the Model to Business Economics</h3>
+  <p>The optimal prediction threshold depends on the cost of intervention versus the cost of losing a subscriber. We explored three operating points:</p>
+
+  <table>
+    <tr><th>Scenario</th><th>Threshold</th><th>Precision</th><th>Recall</th><th>Use Case</th></tr>
+    <tr><td><strong>Conservative</strong></td><td class="num">0.60</td><td class="num">High</td><td class="num">Moderate</td>
+        <td>Expensive interventions (free month, large discount)</td></tr>
+    <tr><td><strong>Balanced</strong></td><td class="num">Best F1</td><td class="num">Balanced</td><td class="num">Balanced</td>
+        <td>Standard retention offers</td></tr>
+    <tr><td><strong>Aggressive</strong></td><td class="num">0.30</td><td class="num">Moderate</td><td class="num">High</td>
+        <td>Low-cost interventions (personalised email, content push)</td></tr>
+  </table>
+
+  <h3>Risk Segmentation</h3>
+  <p>Rather than a binary churn/no-churn flag, the model's probability scores create four risk tiers. Actual churn rates increase monotonically across tiers, confirming the model is well-calibrated.</p>
+
+  <table>
+    <tr><th>Risk Tier</th><th>% of Base</th><th>Avg Score</th><th>Actual Churn Rate</th></tr>
+    <tr><td>Low Risk</td><td class="num">81.9%</td><td class="num">0.1%</td><td class="num">0.0%</td></tr>
+    <tr><td>Medium Risk</td><td class="num">0.8%</td><td class="num">24.0%</td><td class="num">10.7%</td></tr>
+    <tr><td>High Risk</td><td class="num">0.6%</td><td class="num">48.9%</td><td class="num">47.8%</td></tr>
+    <tr><td>Critical</td><td class="num">16.7%</td><td class="num">97.1%</td><td class="num">98.7%</td></tr>
+  </table>
+
+  <p>In production, these tiers would trigger different intervention strategies: Critical players receive direct retention offers, High Risk gets personalised re-engagement content, Medium Risk gets nudge campaigns, and Low Risk receives no action — preserving budget for where it matters.</p>
+</section>
+
+<!-- ═══════════════════════════════ PROPENSITY ═══════════════════════════ -->
+<section>
+  <h2><span class="section-num">Section 4</span>Purchase Propensity & the Valhalla Signal</h2>
+
+  <p>While the churn model protects existing revenue, the propensity model identifies opportunities to <strong>grow</strong> it. We predict which players are likely to purchase paid DLC — a high-margin, targetable action that's ideal for personalised marketing.</p>
+
+  <p>The propensity model trains on all 5,000 players (not just paid subscribers) and achieves an AUC of 0.86 — a realistic, production-believable performance level. Notably, Logistic Regression slightly outperforms Gradient Boosting on this task, demonstrating that the relationship between engagement features and DLC purchase behaviour is approximately linear. Sometimes the simpler model is the right one.</p>
+
+  <div class="callout">
+    <div class="callout-title">Data Leakage — A Learning Moment</div>
+    <p>Our initial propensity model achieved a suspicious AUC of 1.000. Investigation revealed that features like <em>total_spend</em> and <em>n_dlc_paid</em> contained information about the target variable (did they buy paid DLC?) within the feature itself. After removing all leaky features, AUC dropped to the realistic 0.86 range. Recognising and correcting data leakage is a critical production skill — a model that "cheats" in development will fail silently in deployment.</p>
+  </div>
+
+  <h3>What Drives DLC Purchases?</h3>
+  <p>The top predictors of paid DLC purchase are measures of <strong>engagement depth</strong>: games trophied, games played, and total play time dominate feature importance. Trophy hunters and multi-game explorers are the best DLC targets. First-party title affinity (preference for Sony exclusives) also contributes — players invested in Sony's ecosystem are more receptive to additional content.</p>
+
+  <h3>The Valhalla Effect: Free Content as a Purchase Funnel</h3>
+  <p>God of War: Ragnarok's free Valhalla DLC was designed as a test case for a specific personalisation hypothesis: <em>does engaging with free content predict willingness to pay for future content?</em></p>
+
+  <div class="metrics-row">
+    <div class="metric-card">
+      <div class="value">67.5%</div>
+      <div class="label">Claimers Who Bought Paid DLC</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">27.2%</div>
+      <div class="label">Non-Claimers Who Bought</div>
+    </div>
+    <div class="metric-card">
+      <div class="value" style="color: var(--green);">+149%</div>
+      <div class="label">Conversion Lift</div>
+    </div>
+  </div>
+
+  <p>The signal is strong at the cohort level. However, in a global feature importance ranking, <em>claimed_valhalla</em> ranks 26th out of 36 features — outranked by broader engagement depth metrics. This tells a nuanced story: broad engagement predicts DLC purchase better than any single game-specific flag, but the Valhalla signal would be most valuable in a <strong>game-specific propensity model</strong> or as a <strong>personalisation rule</strong> (e.g., "when a player claims free DLC, add them to a paid DLC recommendation queue for that franchise").</p>
+
+  <div class="callout insight">
+    <div class="callout-title">Actionable Insight</div>
+    <p>Free DLC functions as a purchase intent signal. Players who engage with free content are demonstrating franchise affinity that can be converted into paid content purchases. This "try before you buy" dynamic is directly actionable: track free DLC claims in real time and route claimers into targeted paid content recommendation flows.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CLV ═══════════════════════════════ -->
+<section>
+  <h2><span class="section-num">Section 5</span>Customer Lifetime Value</h2>
+
+  <p>CLV estimation answers the question that underlies all personalisation: <strong>how much is each player worth?</strong> This determines how much PlayStation should be willing to invest in retaining or growing each individual.</p>
+
+  <p>We use a hybrid forward-looking CLV model with two components: subscription revenue (tier price &times; 12 months &times; retention probability) and purchase revenue (recent spend velocity projected forward, adjusted for churn risk). In production, this would be refined with probabilistic models (BG/NBD + Gamma-Gamma for non-contractual revenue, survival models for subscription tenure), but the structural logic is the same.</p>
+
+  <div class="metrics-row">
+    <div class="metric-card">
+      <div class="value">$68</div>
+      <div class="label">Average 12-Month CLV</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">$342K</div>
+      <div class="label">Total Portfolio Value</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">5</div>
+      <div class="label">Value Segments</div>
+    </div>
+  </div>
+
+  <p>As with revenue, CLV is heavily concentrated. A small Platinum segment drives an outsized share of total value — reinforcing why personalised treatment matters. Spending the same retention budget on a $500 CLV player and a $5 CLV player is objectively wasteful. The NBA framework that follows encodes this economic logic.</p>
+</section>
+
+<!-- ═══════════════════════════════ NBA ═══════════════════════════════ -->
+<section>
+  <h2><span class="section-num">Section 6</span>Next Best Action Framework</h2>
+
+  <p>This is where the project bridges the gap between data science and business impact. The NBA framework combines three model outputs — churn probability, DLC propensity, and 12-month CLV — into a single, specific recommendation for each player.</p>
+
+  <p>Each action category has an explicit intervention strategy and a budget ceiling tied to player value (10% of their CLV). This means the framework is economically self-correcting: high-value players justify meaningful investment, while low-value players receive proportionally lighter treatment.</p>
+
+  <div class="nba-grid">
+    <div class="nba-card retain-critical">
+      <h4>Retain Critical &mdash; 0.1%</h4>
+      <p>High churn risk + high CLV. Personal retention offer: free month, targeted discount, or direct outreach. These are the most valuable players about to leave.</p>
+    </div>
+    <div class="nba-card retain-standard">
+      <h4>Retain Standard &mdash; 1.1%</h4>
+      <p>Moderate churn risk. Personalised re-engagement: content recommendations based on play history, "we miss you" campaigns. Lighter touch, scalable.</p>
+    </div>
+    <div class="nba-card upsell">
+      <h4>Upsell &mdash; 30.1%</h4>
+      <p>Low churn risk + high purchase propensity. Prime targets for DLC offers, new release recommendations, and PS Plus tier upgrade prompts.</p>
+    </div>
+    <div class="nba-card nurture">
+      <h4>Nurture &mdash; 37.8%</h4>
+      <p>Engaged but not purchase-ready. Include in general engagement campaigns to build toward future purchase readiness. Low investment, long-term play.</p>
+    </div>
+  </div>
+
+  <p>The remaining 30.9% of players fall into <strong>Monitor</strong> — low engagement, low propensity, low CLV. No active intervention; re-score next quarter. Knowing <em>when not to spend</em> is as valuable as knowing when to spend.</p>
+
+  <h3>Estimated Business Impact</h3>
+  <p>Using conservative intervention assumptions (30% save rate for critical retention, 10% conversion lift for upsell, $3–15 cost per player depending on action type), the framework generates a positive net ROI across 5,000 players:</p>
+
+  <table>
+    <tr><th>Action</th><th>Players</th><th>Gross Revenue</th><th>Cost</th><th>Net Impact</th><th>ROI</th></tr>
+    <tr><td><strong>Retain Critical</strong></td><td class="num">7</td><td class="num">$146</td><td class="num">$105</td><td class="num">$41</td><td class="num">0.4x</td></tr>
+    <tr><td><strong>Retain Standard</strong></td><td class="num">53</td><td class="num">$261</td><td class="num">$159</td><td class="num">$102</td><td class="num">0.6x</td></tr>
+    <tr><td><strong>Upsell</strong></td><td class="num">1,506</td><td class="num">$3,765</td><td class="num">$3,012</td><td class="num">$753</td><td class="num">0.2x</td></tr>
+    <tr><td><strong>Nurture</strong></td><td class="num">1,889</td><td class="num">$850</td><td class="num">$944</td><td class="num">-$94</td><td class="num">-0.1x</td></tr>
+    <tr><td><strong>Total</strong></td><td class="num">5,000</td><td class="num">$5,022</td><td class="num">$4,220</td><td class="num"><strong>$801</strong></td><td class="num"><strong>0.2x</strong></td></tr>
+  </table>
+
+  <p>The Nurture segment showing a slight negative ROI is not a flaw — it's the framework correctly identifying that low-propensity players don't always justify even lightweight spend. At PlayStation's scale (100M+ players), these per-5,000 numbers multiply by orders of magnitude, and the relative ROI across action categories becomes the key strategic input: <strong>upsell and retention are the high-ROI actions; nurture should be the lowest-cost channel.</strong></p>
+</section>
+
+<!-- ═══════════════════════════════ FUTURE WORK ═══════════════════════════ -->
+<section>
+  <h2><span class="section-num">Section 7</span>Future Work & Production Extensions</h2>
+
+  <h3>Sequence Modelling on Raw Event Streams</h3>
+  <p>The gradient boosting approach used here is well-suited to aggregated tabular features. However, PlayStation's raw data is inherently sequential — a player's session history is a time series, and their purchase journey is an ordered sequence of events. With production data, two extensions would be worth exploring: an LSTM or Transformer-based sequence model trained directly on raw session event streams, which could capture complex temporal patterns that aggregated features miss; and learned player embeddings from session sequences, which could power both the churn model and a content recommendation system simultaneously.</p>
+
+  <h3>A/B Testing the Valhalla Signal</h3>
+  <p>The 149% lift from free DLC engagement is an observational finding, not a causal one. Players who claim free DLC may simply be more engaged to begin with, and would have bought paid DLC regardless. To establish causality, we'd design a randomised experiment: surface a free DLC promotion to a random subset of eligible players, hold out a control group, and measure the difference in subsequent paid DLC purchases. The test design would need to account for self-selection bias and potential cannibalization effects.</p>
+
+  <h3>Real-Time Scoring & Streaming Infrastructure</h3>
+  <p>The current implementation runs as a batch process (score all players, output a table). In production, event-driven scoring — where a player's churn risk updates after every session, every purchase, every lapsed day — would enable real-time intervention triggers. This requires streaming infrastructure (Kafka, Flink, or similar), a feature store for real-time feature computation, and model serving infrastructure with low-latency requirements.</p>
+
+  <h3>Intervention Cost Modelling</h3>
+  <p>Our business impact simulation uses assumed intervention costs and success rates. In production, these parameters would come from historical A/B test results, calibrated and updated quarterly. The framework itself supports any cost/success inputs — the architecture is designed for iterative refinement as experimental data accumulates.</p>
+
+  <h3>Multi-Platform Player Identity</h3>
+  <p>PlayStation players increasingly span PS4, PS5, PC, and mobile (Remote Play). A unified player identity graph that connects behaviour across platforms would substantially improve feature quality and prediction accuracy, particularly for engagement-based features that currently only capture single-platform activity.</p>
+</section>
+
+<!-- ═══════════════════════════════ TECHNICAL ═══════════════════════════ -->
+<section>
+  <h2><span class="section-num">Section 8</span>Technical Summary</h2>
+
+  <table>
+    <tr><th>Component</th><th>Details</th></tr>
+    <tr><td>Languages & Libraries</td><td>Python 3.10+, pandas, NumPy, scikit-learn, matplotlib, seaborn</td></tr>
+    <tr><td>Models</td><td>Logistic Regression (baseline), Gradient Boosting Classifier (primary)</td></tr>
+    <tr><td>Evaluation</td><td>ROC AUC, Average Precision, Precision-Recall curves, 5-fold stratified CV</td></tr>
+    <tr><td>CLV Approach</td><td>Hybrid: subscription revenue (retention-adjusted) + purchase velocity (churn-adjusted)</td></tr>
+    <tr><td>NBA Framework</td><td>Rule-based decision engine with 5 action categories and CLV-based budget ceilings</td></tr>
+    <tr><td>Data</td><td>5,000 simulated players, 7 tables, 24-month observation window (Jan 2024 – Dec 2025)</td></tr>
+  </table>
+
+  <h3>Repository Structure</h3>
+
+  <table>
+    <tr><th>File</th><th>Description</th></tr>
+    <tr><td><code>01_data_simulation.ipynb</code></td><td>PlayStation ecosystem simulation — 5K players, 7 tables, embedded behavioural signals</td></tr>
+    <tr><td><code>02_player_360_features.ipynb</code></td><td>Exploratory analysis and 47-feature Player 360 table</td></tr>
+    <tr><td><code>03_churn_model.ipynb</code></td><td>Churn prediction — LR vs GB, threshold tuning, risk segmentation</td></tr>
+    <tr><td><code>04_propensity_model.ipynb</code></td><td>DLC purchase propensity — leakage fix, Valhalla deep dive</td></tr>
+    <tr><td><code>05_clv_and_next_best_action.ipynb</code></td><td>CLV estimation, NBA framework, impact simulation, player profiles</td></tr>
+  </table>
+</section>
+
+</main>
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer class="report-footer">
+  <div class="container">
+    <p>Full code, notebooks, and methodology available on<br>
+    <a href="https://github.com/armunif/playstation-clv">github.com/armunif/playstation-clv</a></p>
+    <p class="small">Built with Python, scikit-learn, and a lot of love for PlayStation.</p>
+  </div>
+</footer>
+
+</body>
+</html>
