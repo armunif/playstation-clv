@@ -1,0 +1,31 @@
+game_id,game_name,genre,release_date,is_first_party,base_price,in_ps_plus_extra
+G001,God of War: Ragnarok,Action-RPG,2022-11-09,True,69.99,False
+G002,Spider-Man 2,Action,2023-10-20,True,69.99,False
+G003,Horizon Forbidden West,Action-RPG,2022-02-18,True,69.99,True
+G004,The Last of Us Part I,Action,2022-09-02,True,69.99,True
+G005,Gran Turismo 7,Racing,2022-03-04,True,69.99,True
+G006,Returnal,Roguelike,2021-04-30,True,69.99,True
+G007,Ratchet & Clank: Rift Apart,Platformer,2021-06-11,True,69.99,True
+G008,Astro Bot,Platformer,2024-09-06,True,59.99,False
+G009,Helldivers 2,Shooter,2024-02-08,True,39.99,False
+G010,Stellar Blade,Action,2024-04-26,True,69.99,False
+G011,FIFA 24,Sports,2023-09-29,False,69.99,False
+G012,Call of Duty: MW III,FPS,2023-11-10,False,69.99,False
+G013,Elden Ring,Action-RPG,2022-02-25,False,59.99,False
+G014,Baldur's Gate 3,RPG,2023-09-06,False,69.99,False
+G015,Hogwarts Legacy,Action-RPG,2023-02-10,False,69.99,False
+G016,Diablo IV,Action-RPG,2023-06-06,False,69.99,False
+G017,Final Fantasy XVI,Action-RPG,2023-06-22,False,69.99,False
+G018,Resident Evil 4 Remake,Horror,2023-03-24,False,59.99,False
+G019,GTA Online,Action,2014-11-18,False,0.0,False
+G020,Fortnite,Battle Royale,2017-07-21,False,0.0,False
+G021,Ghost of Tsushima,Action,2020-07-17,True,59.99,True
+G022,Demon's Souls,Action-RPG,2020-11-12,True,69.99,True
+G023,Uncharted: Legacy of Thieves,Action,2022-01-28,True,49.99,True
+G024,Death Stranding DC,Action,2022-03-28,True,49.99,True
+G025,Stardew Valley,Simulation,2016-02-26,False,14.99,True
+G026,Hades,Roguelike,2021-08-13,False,24.99,True
+G027,Cyberpunk 2077,RPG,2020-12-10,False,59.99,False
+G028,It Takes Two,Co-op,2021-03-26,False,39.99,True
+G029,Dead Cells,Roguelike,2018-08-07,False,24.99,True
+G030,Bloodborne,Action-RPG,2015-03-24,True,19.99,True
